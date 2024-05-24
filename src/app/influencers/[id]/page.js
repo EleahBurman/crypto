@@ -34,6 +34,10 @@ export default function Influencer(){
     init();
   }, [params.id]);
 
+  const pay = (e) => {
+    e.preventDefault();
+    console.log('pay')
+  }
   return(
     <main className="container text-center">
       <div className="row">
@@ -47,7 +51,7 @@ export default function Influencer(){
               <li className="list-group-item">Youtube Channel: {influencer.youtubeChannel}</li>
               <li className="list-group-item">Wallet: {influencer.wallet}</li>
               <li className="list-group-item">
-                <button type="submit" className="btn btn-secondary">Pay</button>
+                <button type="submit" onClick={(e)=>pay(e)} className="btn btn-secondary">Pay</button>
               </li>
             </ul>
           ) : null}
