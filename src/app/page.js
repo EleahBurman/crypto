@@ -33,7 +33,7 @@ export default async function Home() {
                 <tr key={influencer.id}>
                   <td>{influencer.name}</td>
                   <td>{influencer.youtubeChannel}</td>
-                  <td><a href={`influencers/${influencer.id}.name`}>Link</a></td>
+                  <td><a href={`influencers/${influencer.id}`}>Link</a></td>
 
                 </tr>
               ))}
