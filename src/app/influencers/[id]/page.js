@@ -1,11 +1,11 @@
 "use client"
 
 import { useParams } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function Influencer(){
   const params = useParams();
-  
+  const [influencer, setInfluencer] = useState(undefined)
   useEffect(()=>{
     const init = async () => {
       try{
@@ -20,7 +20,7 @@ export default function Influencer(){
           }
         )
         const res = await response.json();
-        console.log(res, "whats the response")
+        setInfluencer(res)
         if(response.ok){
           //setFeedback({status: "success", message: res.message})
         }else{
@@ -35,6 +35,24 @@ export default function Influencer(){
   }, [params.id]);
 
   return(
-    <div>Hi, I am an influencer</div>
+    <main className="container text-center">
+      <div className="row">
+        <div className="main-col col d-flex flex-column justify-content-center">
+          <h1>Crypto Patreon</h1>
+          <p>Tip your favorite influencer!</p>
+          {influencer ? (
+            <ul className="list-group">
+              <li className="list-group-item">Name: {influencer.name}</li>
+              <li className="list-group-item">Description: {influencer.description}</li>
+              <li className="list-group-item">Youtube Channel: {influencer.youtubeChannel}</li>
+              <li className="list-group-item">Wallet: {influencer.wallet}</li>
+              <li className="list-group-item">
+                <button type="submit" className="btn btn-secondary">Pay</button>
+              </li>
+            </ul>
+          ) : null}
+        </div>
+      </div>
+    </main>
   )
 }
