@@ -2,10 +2,12 @@
 
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { ethers } from 'ethers'
 
 export default function Influencer(){
   const params = useParams();
   const [influencer, setInfluencer] = useState(undefined)
+  
   useEffect(()=>{
     const init = async () => {
       try{
@@ -28,15 +30,26 @@ export default function Influencer(){
         }
       }catch(e){
         console.log(e)
-        //setFeedback({status: "danger", message: e.message})
       }
     }
     init();
   }, [params.id]);
-
-  const pay = (e) => {
+  //step 1 - allow the app in metamask
+  //step 2 - submit transaction request to metamask
+  //step 3 - user validate, transaction is sent to ethereum blockchain
+  const pay = async (e) => {
     e.preventDefault();
     console.log('pay')
+
+    const provider = new ethers.BrowserProvider(window.ethereum)
+    const signer = await provider.getSigner();
+    const transactionRequest = {
+      to: influencer.wallet,
+      value: ethers.parseEther('0.001')
+    }
+
+    const receipt = await signer.sendTransaction(transactionRequest)
+    console.log(receipt)
   }
   return(
     <main className="container text-center">
